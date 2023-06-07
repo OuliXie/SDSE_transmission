@@ -36,3 +36,5 @@ All positive swabs including those which were not available for sequencing.
 Abbreviated metadata table from manuscript Supplementary Table 1.
 11) **pyo_metadata.csv** <br>
 Abbreviated metadata table from Lacey et al. DOI: 10.1016/s2666-5247(23)00068-x
+12) **sampling_intervals.csv** <br>
+Dates of community visits
