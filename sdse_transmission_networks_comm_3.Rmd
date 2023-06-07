@@ -1,0 +1,651 @@
+---
+title: "SDSE_transmission_networks_comm_3"
+author: "Ouli Xie"
+date: "07/06/2023"
+output: pdf_document
+---
+
+```{r, include=FALSE}
+library(igraph)
+library(ggplot2)
+library(gridExtra)
+library(tidyverse)
+library(plotfunctions)
+library(ggraph)
+library(tidygraph)
+library(scatterpie)
+library(lubridate)
+```
+
+## Generate community 3 transmission networks
+
+Note that community 3 is more sparsely sampled compared to community 1. This
+results in less inferred transmission links.
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+sdse_df <- read_csv("sdse_clusters_comm_3.csv")
+sdse.number.isolates.t.cluster.refined <- nrow(sdse_df)
+
+pyo_df <- read_csv("pyo_clusters_comm_3.csv")
+# Remove singletons
+pyo_singletons <- pyo_df %>% group_by(t.cluster.refined) %>% count() %>% 
+  dplyr::filter(n==1)
+pyo_df <- pyo_df %>% dplyr::filter(!t.cluster.refined %in% pyo_singletons)
+pyo.number.isolates.t.cluster.refined <- nrow(pyo_df)
+
+# Create vector of SDSE household IDs for transmission matrix
+# Separate vectors for SDSE and pyo
+sdse.hh.id <- unique(sdse_df$hh) # order of households in transmission matrix
+sdse.number.hh <- length(sdse.hh.id) # number of households
+sdse.number.hh.t.cluster.refined <- sdse.number.hh
+
+# Create vector of pyo household IDs for transmission matrix
+pyo.hh.id <- unique(pyo_df$hh) # order of households in transmission matrix
+pyo.number.hh <- length(pyo.hh.id) # number of households
+pyo.number.hh.t.cluster.refined <- pyo.number.hh
+```
+
+Read in sampling interval data
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+sample_intervals <- read_csv("sampling_intervals.csv")
+
+sample_intervals$Start <- as.Date(sample_intervals$Start, "%d/%m/%Y")
+sample_intervals$End <- as.Date(sample_intervals$End, "%d/%m/%Y")
+sample_intervals_long <- sample_intervals[0, 1:3] %>% rename(Date = Start)
+for (i in 1:nrow(sample_intervals)) {
+  for (j in 0:(sample_intervals$Within_interval[i] - 1)) {
+    sample_intervals_long <- sample_intervals_long %>% 
+      add_row(Community = sample_intervals$Community[i],
+              Interval = sample_intervals$Interval[i],
+              Date = sample_intervals$Start[i] + j)
+  }
+}
+
+# Include only Community 3
+sample_intervals_long <- sample_intervals_long %>% dplyr::filter(Community == 3)
+no_intervals <- length(unique(sample_intervals_long$Interval))
+```
+
+Set transmission window
+
+```{r}
+# Set transmission window for SDSE (days)
+sdse.t.window <- 44
+sdse.m.window <- 12
+
+# Set transmission window for pyo (days)
+pyo.t.window <- 44
+pyo.m.window <- 12
+```
+
+Create adjacency matrices for each sampling interval
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+sdse.t.cluster.refined <- sdse_df
+sdse.transmission.determined <- 
+  matrix(0, nrow = sdse.number.isolates.t.cluster.refined, ncol = 1)
+sdse.mat.t.cluster.refined <- 
+  matrix(0, nrow = sdse.number.hh, ncol = sdse.number.hh)
+sdse.mat.t.cluster.refined.carriage <- 
+  matrix(0, nrow = sdse.number.hh, ncol = sdse.number.hh)
+rownames(sdse.mat.t.cluster.refined) <- sdse.hh.id
+colnames(sdse.mat.t.cluster.refined) <- sdse.hh.id
+rownames(sdse.mat.t.cluster.refined.carriage) <- sdse.hh.id
+colnames(sdse.mat.t.cluster.refined.carriage) <- sdse.hh.id
+
+pyo.t.cluster.refined <- pyo_df
+pyo.transmission.determined <- 
+  matrix(0, nrow = pyo.number.isolates.t.cluster.refined, ncol = 1)
+pyo.mat.t.cluster.refined <- 
+  matrix(0, nrow = pyo.number.hh, ncol = pyo.number.hh)
+pyo.mat.t.cluster.refined.carriage <- 
+  matrix(0, nrow = pyo.number.hh, ncol = pyo.number.hh)
+rownames(pyo.mat.t.cluster.refined) <- pyo.hh.id
+colnames(pyo.mat.t.cluster.refined) <- pyo.hh.id
+rownames(pyo.mat.t.cluster.refined.carriage) <- pyo.hh.id
+colnames(pyo.mat.t.cluster.refined.carriage) <- pyo.hh.id
+
+# Create list for sdse and pyo matrices for each time point
+sdse_time_determined <- replicate(no_intervals, sdse.transmission.determined, 
+                                  simplify = FALSE)
+pyo_time_determined <- replicate(no_intervals, pyo.transmission.determined, 
+                                 simplify = FALSE)
+sdse_time_matrix <- replicate(no_intervals, sdse.mat.t.cluster.refined,
+                              simplify = FALSE)
+pyo_time_matrix <- replicate(no_intervals, pyo.mat.t.cluster.refined,
+                             simplify = FALSE)
+sdse_time_matrix_carriage <- 
+  replicate(no_intervals, sdse.mat.t.cluster.refined.carriage,
+                                       simplify = FALSE)
+pyo_time_matrix_carriage <- 
+  replicate(no_intervals, pyo.mat.t.cluster.refined.carriage,
+                                      simplify = FALSE)
+sdse_time_matrix_skin <- 
+  replicate(no_intervals, sdse.mat.t.cluster.refined.carriage,
+                                   simplify = FALSE)
+pyo_time_matrix_skin <- 
+  replicate(no_intervals, pyo.mat.t.cluster.refined.carriage,
+                                  simplify = FALSE)
+```
+
+Generate SDSE transmission network looking for isolates from the same 
+transmission cluster within the transmission window (i.e., between community 
+visits). All possible links are drawn
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+# Read in metadata table to ensure not drawing links between same person
+sdse_metadata <- read_csv("sdse_metadata.csv")
+
+# Transmission for SDSE
+# Note sample interval starts at 24 for community 3 so need to subtract 23 for the lists
+
+for (i in 1:sdse.number.isolates.t.cluster.refined) {
+  possiblesource.i <- c()
+  # For each isolate j (source)
+  for (j in 1:sdse.number.isolates.t.cluster.refined) {
+    # That is not isolate i
+    if (j!=i) {
+      # If isolate i and j belong to the same transmission cluster 
+      if (sdse.t.cluster.refined$t.cluster.refined[i] ==
+          sdse.t.cluster.refined$t.cluster.refined[j]) {
+        # Determine date each isolate was collected
+        sink.date <- sdse.t.cluster.refined$date[i]
+        source.date <- sdse.t.cluster.refined$date[j]
+        sink.date <- as.numeric(as.Date(sink.date,format="%d/%m/%Y"))
+        source.date <- as.numeric(as.Date(source.date,format="%d/%m/%Y"))
+        # Check to ensure not same person
+        sink.id <- sdse_metadata$person_id[which(
+          sdse_metadata$Strain == sdse.t.cluster.refined$isolate.id[i])]
+        source.id <- sdse_metadata$person_id[which(
+          sdse_metadata$Strain == sdse.t.cluster.refined$isolate.id[j])]
+        if (sink.id != source.id) {
+          # if isolate j has a collection date within t.window days of isolate i
+          if (sink.date>=source.date+sdse.m.window && 
+              sink.date<=source.date+sdse.t.window){ 
+            # Add isolate j to list of possible sources of isolate i.  
+            possiblesource.i <- append(possiblesource.i,j)
+          }
+        }
+      }
+    }
+  }
+  if (length(possiblesource.i)>0) {
+    # Iterate through each possible link and find source and sink intervals
+    sink.date <- as.Date(sdse.t.cluster.refined$date[i], "%d/%m/%Y")
+    sink.interval <- sample_intervals_long %>% 
+      dplyr::filter(Date == sink.date) %>%
+      pull(Interval)
+    if (sdse_time_determined[[sink.interval-23]][i,1]==0) {
+      for (s in possiblesource.i) {
+        source.date <- as.Date(sdse.t.cluster.refined$date[s], "%d/%m/%Y")
+        source.interval <- sample_intervals_long %>% dplyr::filter(Date == source.date) %>%
+          pull(Interval)
+        # Error check
+        if (source.date > sink.date) {
+          print(i)
+          print(s)
+          print(source.date)
+          print(sink.date)
+          stop("Error source date > sink date")
+        }
+        # Assign links to all possible sources
+        # This is the household of sink isolate i
+        hh.isolate.i <- sdse.t.cluster.refined$hh[i]
+        # This is the position in the matrix of this household
+        hh.isolate.i <- which(grepl(hh.isolate.i, sdse.hh.id))
+        # This is the household of the source isolate
+        hh.isolate.j <- sdse.t.cluster.refined$hh[s]
+        # This is the position in the matrix of this household
+        hh.isolate.j <- which(grepl(hh.isolate.j, sdse.hh.id))
+        # Add transmission event between these households based on sink interval:
+        sdse_time_matrix[[sink.interval-23]][hh.isolate.j, hh.isolate.i] <-
+          sdse_time_matrix[[sink.interval-23]][hh.isolate.j, hh.isolate.i] + 1
+        # If source isolate j is a carriage isolate, add to the carriage matrix
+        if (sdse.t.cluster.refined$type[s]=="Aymptomatic_carriage") {
+          sdse_time_matrix_carriage[[sink.interval-23]][hh.isolate.j, hh.isolate.i] <-
+            sdse_time_matrix_carriage[[sink.interval-23]][hh.isolate.j, hh.isolate.i] + 1
+        }
+        # If source isolate j is a skin isolate, add to the skin matrix
+        if (sdse.t.cluster.refined$type[s]=="Impetigo"){
+          sdse_time_matrix_skin[[sink.interval-23]][hh.isolate.j, hh.isolate.i] <-
+            sdse_time_matrix_skin[[sink.interval-23]][hh.isolate.j, hh.isolate.i] + 1
+        }
+      }
+      # Tag isolate as transmission source being determined
+      sdse_time_determined[[sink.interval-23]][i,1] <- 1
+    }
+  }
+}
+
+```
+
+Generate S. pyogenes transmission adjacency matrix looking for isolates from the 
+same transmission cluster within the transmission window (i.e., between 
+community visits). All possible edges are drawn.
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+pyo_metadata <- read_csv("pyo_metadata.csv")
+
+for (i in 1:pyo.number.isolates.t.cluster.refined) {
+  possiblesource.i <- c()
+  # For each isolate j (source)
+  for (j in 1:pyo.number.isolates.t.cluster.refined) {
+    # That is not isolate i
+    if (j!=i) {
+      # If isolate i and j belong to the same transmission cluster 
+      if (pyo.t.cluster.refined$t.cluster.refined[i]==
+          pyo.t.cluster.refined$t.cluster.refined[j]) {
+        # Determine date each isolate was collected
+        sink.date <- pyo.t.cluster.refined$date[i]
+        source.date <- pyo.t.cluster.refined$date[j]
+        sink.date <- as.numeric(as.Date(sink.date,format="%d/%m/%Y"))
+        source.date <- as.numeric(as.Date(source.date,format="%d/%m/%Y"))
+        # Check to ensure not same person
+        sink.id <- pyo_metadata$Individual_ID[which(
+          pyo_metadata$Isolate_Name == pyo.t.cluster.refined$isolate.id[i])]
+        source.id <- pyo_metadata$Individual_ID[which(
+          pyo_metadata$Isolate_Name == pyo.t.cluster.refined$isolate.id[j])]
+        if (sink.id != source.id) {
+          if (sink.date>=source.date+pyo.m.window && 
+              sink.date<=source.date+pyo.t.window) { 
+            # Add source j to list of possible sources of isolate i.  
+            possiblesource.i <- append(possiblesource.i,j)
+          }
+        }
+      }
+    }
+  }
+  if (length(possiblesource.i)>0) {
+    # Iterate through each possible link and find source and sink intervals
+    sink.date <- as.Date(pyo.t.cluster.refined$date[i], "%d/%m/%Y")
+    sink.interval <- sample_intervals_long %>% 
+      dplyr::filter(Date == sink.date) %>% pull(Interval)
+    if (pyo_time_determined[[sink.interval-23]][i,1]==0) {
+      for (s in possiblesource.i) {
+        source.date <- as.Date(pyo.t.cluster.refined$date[s], "%d/%m/%Y")
+        source.interval <- sample_intervals_long %>% 
+          dplyr::filter(Date == source.date) %>% pull(Interval)
+        # Error check
+        if (source.date > sink.date) {
+          print(i)
+          print(s)
+          print(source.date)
+          print(sink.date)
+          stop("Error source date > sink date")
+        }
+        # Assign links to all possible source
+        # This is the household of sink isolate i
+        hh.isolate.i <- pyo.t.cluster.refined$hh[i]
+        # This is the position in the matrix of this household
+        hh.isolate.i <- which(grepl(hh.isolate.i, pyo.hh.id))
+        # This is the household of the source isolate
+        hh.isolate.j <- pyo.t.cluster.refined$hh[s]
+        # This is the position in the matrix of this household
+        hh.isolate.j <- which(grepl(hh.isolate.j, pyo.hh.id))
+        # Add transmission event between these households based on sink interval:
+        pyo_time_matrix[[sink.interval-23]][hh.isolate.j, hh.isolate.i] <-
+          pyo_time_matrix[[sink.interval-23]][hh.isolate.j, hh.isolate.i] + 1
+        # If the source of isolate is a carriage isolate, add to carriage matrix
+        if (pyo.t.cluster.refined$type[s]=="Aymptomatic_carriage"){
+          pyo_time_matrix_carriage[[sink.interval-23]][hh.isolate.j, hh.isolate.i] <-
+            pyo_time_matrix_carriage[[sink.interval-23]][hh.isolate.j, hh.isolate.i] + 1
+        } else if (pyo.t.cluster.refined$type[s]=="Impetigo") {
+          pyo_time_matrix_skin[[sink.interval-23]][hh.isolate.j, hh.isolate.i] <-
+            pyo_time_matrix_skin[[sink.interval-23]][hh.isolate.j, hh.isolate.i] + 1
+        }
+      }
+      # Tag isolate as transmission source being determined
+      pyo_time_determined[[sink.interval-23]][i,1] <- 1
+    }
+  }
+}
+```
+
+Overlap SDSE and pyo transmission networks
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+# Read in household size
+hh.size <- read_csv("HHsize_community_combined.csv")
+# Remove unknown household
+hh.size <- hh.size %>% dplyr::filter(hh != 999)
+hh.size <- hh.size %>% mutate(hh = paste("HH", hh, sep = "_"))
+# Limit to community 1
+hh.size <- hh.size %>% dplyr::filter(community == 3)
+number.hh <- length(hh.size$hh)
+
+# Read in proportion of positive SDSE and pyo positives in each household
+hh_prop <- read_csv("HH_prop_comm_3.csv")
+
+# First take each time point and convert to data frame
+union_all_df <- tibble(from = character(), to = character(), weight_1 = numeric(),
+                       weight_2 = numeric(), color = character(),
+                       weight = numeric(), interval = numeric())
+union_throat_df <- tibble(from = character(), to = character(), weight_1 = numeric(),
+                          weight_2 = numeric(), color = character(),
+                          weight = numeric(), interval = numeric())
+for (interval in 1:no_intervals) {
+  # Do all isolates first
+  # Separate by whether adjacency matrices are occupied by both, one, or none
+  if (sum(sdse_time_matrix[[interval]]) > 0 & 
+      sum(pyo_time_matrix[[interval]]) > 0) {
+    # Undirected weighted graphs
+    sdse_net <- graph_from_adjacency_matrix(sdse_time_matrix[[interval]], 
+                                            mode="plus", weighted=TRUE, 
+                                            diag=TRUE)
+    pyo_net <- graph_from_adjacency_matrix(pyo_time_matrix[[interval]], 
+                                           mode="plus", weighted=TRUE, 
+                                           diag=TRUE)
+    # Get union
+    union_net <- sdse_net %u% pyo_net
+    # Give separate colours if SDSE, pyo or overlapping edges
+    for (i in 1:length(E(union_net))) {
+      if (!is.na(E(union_net)$weight_1[i]) & !is.na(E(union_net)$weight_2[i])) {
+        E(union_net)$color[i] <- "#20854E"
+        # Take min weight if overlapping (although use unweighted edges at end)
+        E(union_net)$weight[i] <- min(c(E(union_net)$weight_1[i], 
+                                        E(union_net)$weight_2[i]))
+      } else if (!is.na(E(union_net)$weight_1[i]) & 
+                 is.na(E(union_net)$weight_2[i])) {
+        E(union_net)$color[i] <- "#0072B5"
+        E(union_net)$weight[i] <- min(c(E(union_net)$weight_1[i], 
+                                        E(union_net)$weight_2[i]), 
+                                      na.rm = TRUE)
+      } else if (is.na(E(union_net)$weight_1[i]) & 
+                 !is.na(E(union_net)$weight_2[i])) {
+        E(union_net)$color[i] <- "#BC3C29"
+        E(union_net)$weight[i] <- min(c(E(union_net)$weight_1[i], 
+                                        E(union_net)$weight_2[i]), 
+                                      na.rm = TRUE)
+      }
+    }
+  } else if (sum(sdse_time_matrix[[interval]]) == 0 & 
+             sum(pyo_time_matrix[[interval]]) > 0) {
+    # Only pyo occupied
+    union_net <- graph_from_adjacency_matrix(pyo_time_matrix[[interval]], 
+                                             mode="plus", weighted=TRUE, 
+                                             diag=TRUE)
+    E(union_net)$color <- "#BC3C29"
+    # Only SDSE occupied
+  } else if (sum(sdse_time_matrix[[interval]]) > 0 & 
+             sum(pyo_time_matrix[[interval]]) == 0) {
+    union_net <- graph_from_adjacency_matrix(sdse_time_matrix[[interval]], 
+                                             mode="plus", weighted=TRUE, 
+                                             diag=TRUE)
+    E(union_net)$color <- "#0072B5"
+  } else {
+    # Blank matrix as both empty
+    union_net <- graph_from_adjacency_matrix(matrix(0, nrow = number.hh, 
+                                                    ncol = number.hh),
+                                             mode="plus", weighted=TRUE, 
+                                             diag=TRUE)
+  }
+  # Append to df
+  union_net_df <- igraph::as_data_frame(union_net)
+  if (nrow(union_net_df) > 0) {
+    union_net_df$interval <- interval
+  } else if (nrow(union_net_df) == 0) {
+    class(union_net_df$from) <- "character"
+    class(union_net_df$to) <- "character"
+  }
+  union_all_df <- union_all_df %>% bind_rows(union_net_df)
+  
+  # Now do same for throat
+  if (sum(sdse_time_matrix_carriage[[interval]]) > 0 & 
+      sum(pyo_time_matrix_carriage[[interval]]) > 0) {
+    # Undirected weighted graphs
+    sdse_throat_net <- graph_from_adjacency_matrix(
+      sdse_time_matrix_carriage[[interval]], mode="plus", weighted=TRUE, 
+      diag=TRUE)
+    pyo_throat_net <- graph_from_adjacency_matrix(
+      pyo_time_matrix_carriage[[interval]], mode="plus", weighted=TRUE, 
+      diag=TRUE)
+    # Get union
+    union_throat_net <- sdse_throat_net %u% pyo_throat_net
+    # Give separate colours if SDSE, pyo or overlapping edges
+    for (i in 1:length(E(union_throat_net))) {
+      if (!is.na(E(union_throat_net)$weight_1[i]) & 
+          !is.na(E(union_throat_net)$weight_2[i])) {
+        E(union_throat_net)$color[i] <- "#20854E"
+        # Take min weight although ultimately use unweighted edges
+        E(union_throat_net)$weight[i] <- min(c(E(union_throat_net)$weight_1[i], 
+                                               E(union_throat_net)$weight_2[i]))
+      } else if (!is.na(E(union_throat_net)$weight_1[i]) & 
+                 is.na(E(union_throat_net)$weight_2[i])) {
+        E(union_throat_net)$color[i] <- "#0072B5"
+        E(union_throat_net)$weight[i] <- min(c(E(union_throat_net)$weight_1[i], 
+                                               E(union_throat_net)$weight_2[i]), 
+                                             na.rm = TRUE)
+      } else if (is.na(E(union_throat_net)$weight_1[i]) & 
+                 !is.na(E(union_throat_net)$weight_2[i])) {
+        E(union_throat_net)$color[i] <- "#BC3C29"
+        E(union_throat_net)$weight[i] <- min(c(E(union_throat_net)$weight_1[i], 
+                                               E(union_throat_net)$weight_2[i]), 
+                                             na.rm = TRUE)
+      }
+    }
+  } else if (sum(sdse_time_matrix_carriage[[interval]]) == 0 & 
+             sum(pyo_time_matrix_carriage[[interval]]) > 0) {
+    # Only pyo occupied
+    union_throat_net <- graph_from_adjacency_matrix(
+      pyo_time_matrix_carriage[[interval]], mode="plus", weighted=TRUE, 
+      diag=TRUE)
+    E(union_throat_net)$color <- "#BC3C29"
+    # Only SDSE occupied
+  } else if (sum(sdse_time_matrix_carriage[[interval]]) > 0 & 
+             sum(pyo_time_matrix_carriage[[interval]]) == 0) {
+    union_throat_net <- graph_from_adjacency_matrix(
+      sdse_time_matrix_carriage[[interval]], mode="plus", weighted=TRUE, 
+      diag=TRUE)
+    E(union_throat_net)$color <- "#0072B5"
+  } else {
+    # Blank matrix as both empty
+    union_throat_net <- graph_from_adjacency_matrix(matrix(0, nrow = number.hh, 
+                                                           ncol = number.hh),
+                                                    mode="plus", weighted=TRUE, 
+                                                    diag=TRUE)
+  }
+  # Append to df
+  union_throat_net_df <- igraph::as_data_frame(union_throat_net)
+  if (nrow(union_throat_net_df) > 0) {
+    union_throat_net_df$interval <- interval
+  } else if (nrow(union_throat_net_df) == 0) {
+    class(union_throat_net_df$from) <- "character"
+    class(union_throat_net_df$to) <- "character"
+  }
+  union_throat_df <- union_throat_df %>% bind_rows(union_throat_net_df)
+}
+```
+
+Generate overlapping transmission networks with unweighted edges
+
+```{r}
+# Plot overlapping networks over time
+timed_graph <- as_tbl_graph(union_all_df)
+# Use scatterpie to change nodes to pie charts
+# Set vertex size
+hh.size.temp <- hh.size[hh.size$hh %in% V(timed_graph)$name, ]
+hh.size.temp <- hh.size.temp[match(V(timed_graph)$name, hh.size.temp$hh), ]
+V(timed_graph)$size <- (hh.size.temp$size)^0.5/50
+# Set proportions
+hh_prop_network <- hh_prop[match(V(timed_graph)$name, hh_prop$House), ]
+V(timed_graph)$pyo <- hh_prop_network$pyo
+V(timed_graph)$sdse <- hh_prop_network$SDSE
+
+# Precompute layout with FR algorithm
+set.seed(30)
+l <- layout_with_fr(timed_graph)
+V(timed_graph)$x <- l[, 1]
+V(timed_graph)$y <- l[, 2]
+
+# Create alternative facet labels
+E(timed_graph)$interval2 <- dplyr::recode(E(timed_graph)$interval, 
+                                   "3" = "Aug 2004", "6" = "Nov 2004", 
+                                   "7" = "Dec 2004", "8" = "Jan 2005", 
+                                   "9" = "Feb 2005", "11" = "May 2005", 
+                                   "12" = "Jun 2005")
+
+# Plot unweighted edges
+transmission_net <- ggraph(timed_graph, layout = "manual", 
+                           x = V(timed_graph)$x, y = V(timed_graph)$y) +
+  geom_edge_link(aes(colour = color, 
+                     edge_width = if_else(color == "#20854E", 1, 0.5))) +
+  geom_edge_loop(aes(colour = color, 
+                     edge_width = if_else(color == "#20854E", 1, 0.5))) +
+  scale_edge_width(range = c(0.5, 1.5)) +
+  scale_edge_color_manual(breaks = c("#0072B5", "#BC3C29", "#20854E"),
+                          values = c("#0072B5", "#BC3C29", "#20854E"),
+                          name = "Transmission link",
+                          labels = c("SDSE", "S. pyogenes", "Shared")) +
+  geom_scatterpie(aes(x = x, y = y, r = size * 1.5, group = name), 
+                  cols = c("pyo", "sdse"),
+                  data = igraph::as_data_frame(timed_graph, "vertices")) +
+  scale_fill_manual(values = c("#BC3C29", "#0072B5")) +
+  guides(fill = "none", edge_width = "none") +
+  facet_wrap(~ factor(interval2, levels = c("Aug 2004", "Nov 2004", "Dec 2004",
+                                            "Jan 2005", "Feb 2005", "May 2005", 
+                                            "Jun 2005"))) + 
+  coord_equal() + theme_bw(base_size = 20) +
+  theme(axis.title = element_blank(), axis.text = element_blank(),
+        axis.ticks = element_blank(), axis.line = element_blank(),
+        strip.background = element_rect(fill = "white"),
+        panel.grid = element_blank())
+```
+
+```{r, echo=FALSE, fig.dim=c(8,12)}
+transmission_net
+```
+
+Calculate number of unweighted transmission edges
+
+```{r}
+# All edges
+nrow(union_all_df)
+# SDSE unique
+nrow(union_all_df %>% filter(color == "#0072B5"))
+# pyo unique
+nrow(union_all_df %>% filter(color == "#BC3C29"))
+# Overlap edges
+nrow(union_all_df %>% filter(color == "#20854E"))
+
+# Within HH
+# SDSE
+nrow(union_all_df %>% filter(from == to, color %in% c("#0072B5", "#20854E")))
+# pyo
+nrow(union_all_df %>% filter(from == to, color %in% c("#BC3C29", "#20854E")))
+```
+
+Check transmission edges for putative throat isolate source
+
+```{r}
+# All edges
+nrow(union_throat_df)
+# SDSE unique
+nrow(union_throat_df %>% filter(color == "#0072B5"))
+# pyo unique
+nrow(union_throat_df %>% filter(color == "#BC3C29"))
+# Overlap edges
+nrow(union_throat_df %>% filter(color == "#20854E"))
+
+# Within HH and between HH edges
+# SDSE
+nrow(union_throat_df %>% filter(from == to, color %in% c("#0072B5", "#20854E")))
+# pyo
+nrow(union_throat_df %>% filter(from == to, color %in% c("#BC3C29", "#20854E")))
+```
+
+
+## Permutation test
+
+Model of independent transmission is inferred using node label permutation to 
+check if number of overlapping edges is what would be expected in the setting of 
+independent transmission.
+
+The publication uses 10,000 permutations. For speed, this markdown uses 1,000
+permutations. This could be increased to 10,000 if reader would like to fully
+replicate publication analysis.
+
+```{r}
+# Set number of iterations
+no_iterations <- 1000
+
+set.seed(1234)
+set.seed(1234)
+permute_overlap <- tibble(iteration = 1:no_iterations,
+                          overlap_edges = rep(0, no_iterations),
+                          throat_overlap_edges = rep(0, no_iterations),
+                          overlap_links = rep(0, no_iterations),
+                          throat_overlap_links = rep(0, no_iterations))
+sdse_perm_list <- list()
+sdse_throat_perm_list <- list()
+
+for (i in 1:no_iterations) {
+  # Set permutation order which will then be consistent across all time points
+  perm_order <- sample(rownames(sdse_time_matrix[[1]]), replace = FALSE)
+  # Iterate through each time point and use same permutation order to maintain
+  # transmission structure across time
+  sdse_perm_iteration <- list()
+  sdse_throat_perm_iteration <- list()
+  for (j in 1:length(sdse_time_matrix)) {
+    sdse_perm_iteration[[j]] <- sdse_time_matrix[[j]]
+    # Permute nodes - maintain order in rows and columns so
+    # within household transmission events remain within household
+    rownames(sdse_perm_iteration[[j]]) <- colnames(sdse_perm_iteration[[j]]) <- 
+      perm_order
+    sdse_perm_graph <- graph_from_adjacency_matrix(sdse_perm_iteration[[j]],
+                                                   mode="plus", weighted=TRUE, 
+                                                   diag=TRUE)
+    # Don't need to permute pyo as already permuted SDSE
+    pyo_perm_graph <- graph_from_adjacency_matrix(pyo_time_matrix[[j]],
+                                                  mode="plus", weighted=TRUE, 
+                                                  diag=TRUE)
+    sdse_throat_perm_iteration[[j]] <- sdse_time_matrix_carriage[[j]]
+    # Permute nodes for throat matrix
+    rownames(sdse_throat_perm_iteration[[j]]) <- 
+      colnames(sdse_throat_perm_iteration[[j]]) <- perm_order
+    sdse_throat_perm_graph <- graph_from_adjacency_matrix(
+      sdse_throat_perm_iteration[[j]], mode="plus", weighted=TRUE, diag=TRUE)
+    pyo_throat_perm_graph <- graph_from_adjacency_matrix(
+      pyo_time_matrix_carriage[[j]], mode="plus", weighted=TRUE, diag=TRUE)
+    # Calculate overlap with pyo using graph intersect
+    intersect_graph <- sdse_perm_graph %s% pyo_perm_graph
+    intersect_throat_graph <- sdse_throat_perm_graph %s% pyo_throat_perm_graph
+    # Add to summary df
+    # Links (weighted edges)
+    permute_overlap[i, 4] <- permute_overlap[i, 4] + 
+      sum(pmin(E(intersect_graph)$weight_1, E(intersect_graph)$weight_2))
+    permute_overlap[i, 5] <- permute_overlap[i, 5] + 
+      sum(pmin(E(intersect_throat_graph)$weight_1, 
+               E(intersect_throat_graph)$weight_2))
+    # Edges (unweighted)
+    permute_overlap[i, 2] <- permute_overlap[i, 2] + length(E(intersect_graph))
+    permute_overlap[i, 3] <- permute_overlap[i, 3] + 
+      length(E(intersect_throat_graph))
+  }
+  sdse_perm_list[[i]] <- sdse_perm_iteration
+}
+```
+
+Plot observed number of overlapping unweighted edges against permutation
+distribution of the independent transmission model.
+
+```{r, echo=FALSE}
+permute_plot <- permute_overlap %>% ggplot(aes(x = overlap_edges)) + 
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = nrow(union_all_df %>% filter(color == "#20854E")), 
+             linetype = "dashed", colour = "firebrick", size = 1) +
+  xlab("No. overlapping edges") + ylab("No. of permutations") +
+  theme_bw(base_size = 20)
+
+permute_plot
+```
+
+One sided p value of <= the observed value (i.e., hypothesis that there is
+transmission interference).
+
+```{r, echo=FALSE}
+nrow(permute_overlap %>% 
+       filter(overlap_edges <= 
+                nrow(union_all_df %>% filter(color == "#20854E"))))/
+  nrow(permute_overlap)
+```

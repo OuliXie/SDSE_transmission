@@ -1,0 +1,316 @@
+Isolate_Name,Year,Community_ID,Household_ID,Individual_ID,Sample_Site,Sample_Specific,Disease,Date_collected ,SNP_Cluster,genomic_sequence_cluster
+NS3711,2003,Community_1,HH_302,6,Throat,Throat,Aymptomatic_carriage,6/8/2003,GL_39,29
+NS3784,2003,Community_1,HH_302,2,Throat,Throat,Aymptomatic_carriage,17/11/2003,GL_4,33
+NS3786,2003,Community_1,HH_260,26,Throat,Throat,Aymptomatic_carriage,17/11/2003,GL_2,48
+NS3787,2003,Community_1,HH_260,28,Skin,Upper body,Impetigo,17/11/2003,GL_31,19
+NS3797,2003,Community_1,HH_302,15,Throat,Throat,Aymptomatic_carriage,18/11/2003,GL_4,33
+NS3799,2003,Community_1,HH_425,49,Throat,Throat,Aymptomatic_carriage,18/11/2003,GL_42,128
+NS3812,2003,Community_1,HH_263,170,Skin,Right leg,Impetigo,5/12/2003,GL_38,78
+NS3813,2003,Community_1,HH_263,170,Skin,Right foot,Impetigo,5/12/2003,GL_38,78
+NS3844,2004,Community_1,HH_224,501,Throat,Throat,Aymptomatic_carriage,21/1/2004,singleton_GL_46,50
+NS3867,2004,Community_1,HH_224,203,Throat,Throat,Aymptomatic_carriage,24/2/2004,GL_4,33
+NS3868,2004,Community_1,HH_224,205,Throat,Throat,Aymptomatic_carriage,24/2/2004,GL_4,33
+NS3869,2004,Community_1,HH_302,1,Throat,Throat,Aymptomatic_carriage,24/2/2004,singleton_GL_16,191
+NS3870,2004,Community_1,HH_302,41,Throat,Throat,Aymptomatic_carriage,24/2/2004,GL_34,147
+NS3871,2004,Community_1,HH_302,252,Throat,Throat,Aymptomatic_carriage,24/2/2004,GL_15,191
+NS3873,2004,Community_1,HH_425,54,Throat,Throat,Aymptomatic_carriage,24/2/2004,GL_4,33
+NS3876,2004,Community_1,HH_425,154,Throat,Throat,Aymptomatic_carriage,25/2/2004,GL_4,33
+NS3877,2004,Community_1,HH_425,269,Throat,Throat,Aymptomatic_carriage,25/2/2004,GL_4,33
+NS3878,2004,Community_1,HH_425,48,Throat,Throat,Aymptomatic_carriage,25/2/2004,GL_23,39
+NS3884,2004,Community_1,HH_237,277,Throat,Throat,Aymptomatic_carriage,25/2/2004,GL_34,147
+NS3928,2004,Community_1,HH_220,150,Throat,Throat,Aymptomatic_carriage,22/3/2004,GL_35,126
+NS3929,2004,Community_1,HH_224,193,Throat,Throat,Aymptomatic_carriage,22/3/2004,GL_4,33
+NS3932,2004,Community_1,HH_298,20,Throat,Throat,Aymptomatic_carriage,22/3/2004,GL_15,191
+NS3933,2004,Community_1,HH_298,32,Throat,Throat,Aymptomatic_carriage,22/3/2004,GL_4,33
+NS3935,2004,Community_1,HH_302,223,Throat,Throat,Aymptomatic_carriage,22/3/2004,GL_34,147
+NS3938,2004,Community_1,HH_302,222,Skin,Face,Impetigo,22/3/2004,GL_18,12
+NS3940,2004,Community_1,HH_263,172,Throat,Throat,Aymptomatic_carriage,23/3/2004,GL_2,48
+NS3943,2004,Community_1,HH_263,187,Throat,Throat,Aymptomatic_carriage,23/3/2004,GL_4,33
+NS3944,2004,Community_1,HH_425,54,Skin,Left ankle,Impetigo,23/3/2004,GL_17,12
+NS3945,2004,Community_1,HH_263,171,Skin,Left leg,Impetigo,23/3/2004,GL_17,12
+NS3946,2004,Community_1,HH_425,305,Skin,Left leg,Impetigo,23/3/2004,GL_17,12
+NS3947,2004,Community_1,HH_237,276,Throat,Throat,Aymptomatic_carriage,24/3/2004,GL_34,147
+NS3948,2004,Community_1,HH_237,277,Throat,Throat,Aymptomatic_carriage,24/3/2004,GL_34,147
+NS3970,2004,Community_1,HH_425,64,Throat,Throat,Aymptomatic_carriage,19/4/2004,GL_34,147
+NS3977,2004,Community_1,HH_298,32,Throat,Throat,Aymptomatic_carriage,20/4/2004,GL_4,33
+NS3979,2004,Community_1,HH_302,222,Throat,Throat,Aymptomatic_carriage,20/4/2004,GL_15,191
+NS3980,2004,Community_1,HH_302,250,Throat,Throat,Aymptomatic_carriage,20/4/2004,GL_34,147
+NS3982,2004,Community_1,HH_425,232,Throat,Throat,Aymptomatic_carriage,20/4/2004,GL_31,19
+NS3983,2004,Community_1,HH_536,217,Skin,Right arm,Impetigo,20/4/2004,GL_12,60
+NS3984,2004,Community_1,HH_536,217,Skin,Right leg,Impetigo,20/4/2004,GL_2,48
+NS3985,2004,Community_1,HH_536,217,Skin,Left leg,Impetigo,20/4/2004,GL_12,60
+NS3986,2004,Community_1,HH_343,44,Skin,Right toe,Impetigo,20/4/2004,GL_23,39
+NS3992,2004,Community_1,HH_343,210,Throat,Throat,Aymptomatic_carriage,21/4/2004,GL_15,191
+NS3998,2004,Community_1,HH_425,56,Skin,Left leg,Impetigo,21/4/2004,GL_17,12
+NS3999,2004,Community_1,HH_220,148,Skin,Left arm,Impetigo,21/4/2004,GL_23,39
+NS4019,2004,Community_1,HH_237,278,Throat,Throat,Aymptomatic_carriage,18/5/2004,GL_2,48
+NS4027,2004,Community_1,HH_366,164,Throat,Throat,Aymptomatic_carriage,18/5/2004,GL_35,126
+NS4048,2004,Community_1,HH_224,189,Throat,Throat,Aymptomatic_carriage,20/5/2004,GL_31,19
+NS4053,2004,Community_1,HH_425,48,Throat,Throat,Aymptomatic_carriage,20/5/2004,GL_17,12
+NS4057,2004,Community_1,HH_224,309,Skin,Left hand,Impetigo,20/5/2004,GL_60,48
+NS4058,2004,Community_1,HH_224,372,Skin,Left leg,Impetigo,20/5/2004,GL_60,48
+NS4059,2004,Community_1,HH_425,305,Skin,Left leg,Impetigo,20/5/2004,singleton_GL_61,60
+NS4060,2004,Community_1,HH_425,378,Skin,Right leg,Impetigo,20/5/2004,GL_23,39
+NS4079,2004,Community_3,HH_433,427,Skin,Left leg,Impetigo,18/6/2004,GL_57,12
+NS4080,2004,Community_3,HH_433,427,Skin,Right hand,Impetigo,18/6/2004,GL_27,36
+NS4088,2004,Community_1,HH_394,324,Throat,Throat,Aymptomatic_carriage,23/6/2004,singleton_GL_64,40
+NS4091,2004,Community_1,HH_302,250,Throat,Throat,Aymptomatic_carriage,24/6/2004,GL_60,48
+NS4093,2004,Community_1,HH_338,270,Skin,Left foot,Impetigo,22/6/2004,GL_58,12
+NS4095,2004,Community_1,HH_288,9,Skin,Right foot,Impetigo,23/6/2004,GL_31,19
+NS4147,2004,Community_3,HH_495,342,Throat,Throat,Aymptomatic_carriage,20/7/2004,singleton_GL_45,17
+NS4149,2004,Community_3,HH_502,490,Throat,Throat,Aymptomatic_carriage,20/7/2004,GL_35,126
+NS4150,2004,Community_3,HH_539,12,Throat,Throat,Aymptomatic_carriage,20/7/2004,singleton_GL_66,33
+NS4152,2004,Community_3,HH_539,499,Throat,Throat,Aymptomatic_carriage,20/7/2004,GL_53,48
+NS4154,2004,Community_3,HH_529,508,Throat,Throat,Aymptomatic_carriage,20/7/2004,GL_8,77
+NS4155,2004,Community_3,HH_471,1157,Throat,Throat,Aymptomatic_carriage,21/7/2004,singleton_GL_62,25
+NS4157,2004,Community_3,HH_433,428,Skin,Left leg,Impetigo,22/7/2004,GL_23,39
+NS4179,2004,Community_1,HH_224,328,Throat,Throat,Aymptomatic_carriage,27/7/2004,GL_23,39
+NS4180,2004,Community_1,HH_298,33,Throat,Throat,Aymptomatic_carriage,27/7/2004,GL_6,6
+NS4185,2004,Community_1,HH_260,22,Throat,Throat,Aymptomatic_carriage,27/7/2004,GL_6,6
+NS4189,2004,Community_1,HH_263,599,Throat,Throat,Aymptomatic_carriage,29/7/2004,GL_27,36
+NS4192,2004,Community_1,HH_225,592,Skin,Left knee,Impetigo,29/7/2004,GL_23,39
+NS4198,2004,Community_1,HH_220,146,Skin,Upper body,Impetigo,10/8/2004,GL_29,192
+NS4199,2004,Community_1,HH_536,267,Skin,Lower body,Impetigo,10/8/2004,GL_2,48
+NS4249,2004,Community_3,HH_342,623,Throat,Throat,Aymptomatic_carriage,17/8/2004,GL_23,39
+NS4250,2004,Community_3,HH_342,631,Throat,Throat,Aymptomatic_carriage,17/8/2004,GL_40,266
+NS4251,2004,Community_3,HH_491,647,Throat,Throat,Aymptomatic_carriage,17/8/2004,GL_27,36
+NS4252,2004,Community_3,HH_491,648,Throat,Throat,Aymptomatic_carriage,17/8/2004,GL_35,126
+NS4256,2004,Community_1,HH_302,251,Throat,Throat,Aymptomatic_carriage,7/9/2004,GL_7,6
+NS4257,2004,Community_1,HH_338,390,Throat,Throat,Aymptomatic_carriage,7/9/2004,GL_4,33
+NS4259,2004,Community_1,HH_338,676,Throat,Throat,Aymptomatic_carriage,7/9/2004,singleton_GL_19,12
+NS4261,2004,Community_1,HH_338,307,Throat,Throat,Aymptomatic_carriage,7/9/2004,GL_13,25
+NS4263,2004,Community_1,HH_425,269,Throat,Throat,Aymptomatic_carriage,7/9/2004,GL_2,48
+NS4265,2004,Community_1,HH_479,686,Throat,Throat,Aymptomatic_carriage,7/9/2004,GL_60,48
+NS4266,2004,Community_1,HH_260,670,Skin,Left foot,Impetigo,7/9/2004,GL_23,39
+NS4267,2004,Community_1,HH_237,668,Skin,Left foot,Impetigo,7/9/2004,GL_6,6
+NS4268,2004,Community_1,HH_302,251,Skin,Left leg,Impetigo,7/9/2004,GL_13,25
+NS4269,2004,Community_1,HH_302,361,Skin,Left knee,Impetigo,7/9/2004,GL_13,25
+NS4271,2004,Community_1,HH_338,679,Skin,Left knee,Impetigo,7/9/2004,GL_27,36
+NS4275,2004,Community_1,HH_263,599,Throat,Throat,Aymptomatic_carriage,8/9/2004,GL_4,33
+NS4278,2004,Community_1,HH_343,41,Throat,Throat,Aymptomatic_carriage,8/9/2004,GL_27,36
+NS4280,2004,Community_1,HH_425,48,Throat,Throat,Aymptomatic_carriage,8/9/2004,GL_35,126
+NS4281,2004,Community_3,HH_437,717,Throat,Throat,Aymptomatic_carriage,14/9/2004,singleton_GL_5,33
+NS4282,2004,Community_1,HH_479,72,Throat,Throat,Aymptomatic_carriage,9/9/2004,GL_2,48
+NS4286,2004,Community_1,HH_343,40,Skin,Right leg,Impetigo,8/9/2004,GL_6,6
+NS4287,2004,Community_1,HH_479,76,Skin,Right leg,Impetigo,9/9/2004,singleton_GL_65,147
+NS4289,2004,Community_1,HH_479,712,Skin,Left arm,Impetigo,9/9/2004,GL_13,25
+NS4337,2004,Community_3,HH_502,535,Skin,Back,Impetigo,15/9/2004,GL_38,78
+NS4491,2004,Community_1,HH_260,767,Throat,Throat,Aymptomatic_carriage,5/10/2004,GL_15,191
+NS4492,2004,Community_1,HH_263,186,Throat,Throat,Aymptomatic_carriage,5/10/2004,GL_13,25
+NS4495,2004,Community_1,HH_302,5,Throat,Throat,Aymptomatic_carriage,5/10/2004,GL_7,6
+NS4496,2004,Community_1,HH_288,672,Throat,Throat,Aymptomatic_carriage,5/10/2004,GL_13,25
+NS4499,2004,Community_1,HH_237,278,Throat,Throat,Aymptomatic_carriage,5/10/2004,GL_17,12
+NS4500,2004,Community_1,HH_237,342,Throat,Throat,Aymptomatic_carriage,5/10/2004,GL_11,60
+NS4501,2004,Community_1,HH_260,704,Skin,Left arm,Impetigo,5/10/2004,GL_11,60
+NS4502,2004,Community_1,HH_288,698,Skin,Right leg,Impetigo,5/10/2004,GL_18,12
+NS4503,2004,Community_1,HH_366,602,Skin,Left leg,Impetigo,6/10/2004,GL_23,39
+NS4504,2004,Community_1,HH_302,1,Skin,Left leg,Impetigo,6/10/2004,GL_27,36
+NS4505,2004,Community_1,HH_220,189,Skin,Right leg,Impetigo,7/10/2004,GL_42,128
+NS4506,2004,Community_1,HH_236,769,Skin,Right leg,Impetigo,7/10/2004,singleton_GL_24,39
+NS4507,2004,Community_1,HH_298,34,Skin,Right knee,Impetigo,4/10/2004,GL_27,36
+NS4508,2004,Community_1,HH_366,164,Throat,Throat,Aymptomatic_carriage,6/10/2004,GL_13,25
+NS4515,2004,Community_3,HH_437,738,Throat,Throat,Aymptomatic_carriage,12/10/2004,GL_3,2
+NS4517,2004,Community_3,HH_421,150,Skin,Left leg,Impetigo,12/10/2004,GL_41,22
+NS4532,2004,Community_1,HH_338,871,Throat,Throat,Aymptomatic_carriage,8/11/2004,singleton_GL_63,48
+NS4540,2004,Community_1,HH_479,665,Throat,Throat,Aymptomatic_carriage,9/11/2004,GL_7,6
+NS4545,2004,Community_1,HH_220,144,Throat,Throat,Aymptomatic_carriage,9/11/2004,GL_53,48
+NS4547,2004,Community_1,HH_236,769,Throat,Throat,Aymptomatic_carriage,9/11/2004,GL_6,6
+NS4549,2004,Community_1,HH_403,876,Throat,Throat,Aymptomatic_carriage,9/11/2004,GL_35,126
+NS4555,2004,Community_1,HH_425,51,Throat,Throat,Aymptomatic_carriage,10/11/2004,GL_7,6
+NS4558,2004,Community_1,HH_403,283,Skin,Left leg,Impetigo,9/11/2004,GL_13,25
+NS4559,2004,Community_1,HH_425,154,Skin,Left leg,Impetigo,9/11/2004,GL_7,6
+NS4560,2004,Community_1,HH_425,154,Skin,Right leg,Impetigo,9/11/2004,GL_7,6
+NS4561,2004,Community_1,HH_298,21,Skin,Left leg,Impetigo,10/11/2004,GL_27,36
+NS4562,2004,Community_1,HH_298,32,Skin,Right leg,Impetigo,10/11/2004,GL_27,36
+NS4563,2004,Community_1,HH_302,1,Skin,Right foot,Impetigo,10/11/2004,GL_28,36
+NS4564,2004,Community_1,HH_536,267,Skin,Right leg,Impetigo,10/11/2004,GL_29,192
+NS4565,2004,Community_1,HH_237,278,Skin,Right foot,Impetigo,11/11/2004,GL_11,60
+NS4568,2004,Community_3,HH_491,890,Skin,Right leg,Impetigo,16/11/2004,GL_8,77
+NS4569,2004,Community_3,HH_421,895,Skin,Right leg,Impetigo,16/11/2004,GL_57,12
+NS4571,2004,Community_3,HH_421,821,Skin,Right leg,Impetigo,17/11/2004,GL_41,22
+NS4593,2004,Community_1,HH_536,235,Throat,Throat,Aymptomatic_carriage,7/12/2004,GL_38,78
+NS4594,2004,Community_1,HH_536,979,Throat,Throat,Aymptomatic_carriage,7/12/2004,GL_13,25
+NS4608,2004,Community_1,HH_425,681,Throat,Throat,Aymptomatic_carriage,8/12/2004,GL_58,12
+NS4609,2004,Community_1,HH_425,684,Throat,Throat,Aymptomatic_carriage,8/12/2004,GL_21,40
+NS4612,2004,Community_1,HH_225,240,Throat,Throat,Aymptomatic_carriage,9/12/2004,GL_13,25
+NS4613,2004,Community_1,HH_225,306,Throat,Throat,Aymptomatic_carriage,9/12/2004,GL_11,60
+NS4618,2004,Community_1,HH_479,989,Throat,Throat,Aymptomatic_carriage,9/12/2004,singleton_GL_47,196
+NS4620,2004,Community_1,HH_237,777,Throat,Throat,Aymptomatic_carriage,9/12/2004,GL_11,60
+NS4621,2004,Community_1,HH_237,999,Throat,Throat,Aymptomatic_carriage,9/12/2004,GL_6,6
+NS4622,2004,Community_1,HH_288,672,Throat,Throat,Aymptomatic_carriage,9/12/2004,GL_11,60
+NS4624,2004,Community_1,HH_298,97,Skin,Right foot,Impetigo,8/12/2004,GL_39,29
+NS4625,2004,Community_1,HH_302,1,Skin,Right leg,Impetigo,8/12/2004,GL_28,36
+NS4626,2004,Community_1,HH_302,251,Skin,Left leg,Impetigo,8/12/2004,GL_29,192
+NS4627,2004,Community_1,HH_536,213,Skin,Right foot,Impetigo,8/12/2004,GL_13,25
+NS4628,2004,Community_1,HH_237,317,Skin,Left foot,Impetigo,9/12/2004,GL_11,60
+NS4629,2004,Community_1,HH_237,343,Skin,Right leg,Impetigo,9/12/2004,GL_7,6
+NS4630,2004,Community_1,HH_237,579,Skin,Right leg,Impetigo,9/12/2004,GL_11,60
+NS4631,2004,Community_1,HH_237,691,Skin,Right leg,Impetigo,9/12/2004,GL_30,196
+NS4632,2004,Community_1,HH_288,346,Skin,Right leg,Impetigo,9/12/2004,GL_29,192
+NS4633,2004,Community_1,HH_288,698,Skin,Right foot,Impetigo,9/12/2004,GL_14,49
+NS4634,2004,Community_1,HH_288,768,Skin,Right foot,Impetigo,9/12/2004,GL_58,12
+NS4635,2004,Community_1,HH_288,782,Skin,Left knee,Impetigo,9/12/2004,GL_29,192
+NS4636,2004,Community_1,HH_479,989,Skin,Left leg,Impetigo,9/12/2004,GL_30,196
+NS4642,2004,Community_3,HH_342,1106,Throat,Throat,Aymptomatic_carriage,13/12/2004,GL_3,2
+NS4643,2004,Community_3,HH_342,1003,Throat,Throat,Aymptomatic_carriage,13/12/2004,GL_3,2
+NS4644,2004,Community_3,HH_342,1007,Throat,Throat,Aymptomatic_carriage,13/12/2004,GL_3,2
+NS4651,2004,Community_3,HH_421,1012,Throat,Throat,Aymptomatic_carriage,13/12/2004,GL_3,2
+NS4656,2005,Community_1,HH_298,35,Throat,Throat,Aymptomatic_carriage,4/1/2005,GL_14,49
+NS4658,2005,Community_1,HH_425,56,Throat,Throat,Aymptomatic_carriage,4/1/2005,GL_7,6
+NS4660,2005,Community_1,HH_224,203,Throat,Throat,Aymptomatic_carriage,5/1/2005,GL_7,6
+NS4663,2005,Community_1,HH_260,258,Throat,Throat,Aymptomatic_carriage,5/1/2005,GL_6,6
+NS4675,2005,Community_1,HH_338,270,Throat,Throat,Aymptomatic_carriage,5/1/2005,GL_11,60
+NS4678,2005,Community_1,HH_338,885,Throat,Throat,Aymptomatic_carriage,5/1/2005,GL_11,60
+NS4689,2005,Community_1,HH_224,204,Skin,Left hand,Impetigo,5/1/2005,GL_29,192
+NS4690,2005,Community_1,HH_288,12,Skin,Right leg,Impetigo,5/1/2005,GL_20,268
+NS4691,2005,Community_1,HH_479,78,Skin,Left hand,Impetigo,5/1/2005,GL_6,6
+NS4692,2005,Community_1,HH_263,402,Skin,Right leg,Impetigo,5/1/2005,GL_11,60
+NS4696,2005,Community_3,HH_342,622,Throat,Throat,Aymptomatic_carriage,17/1/2005,GL_57,12
+NS4697,2005,Community_3,HH_402,704,Throat,Throat,Aymptomatic_carriage,17/1/2005,GL_3,2
+NS4699,2005,Community_3,HH_433,566,Throat,Throat,Aymptomatic_carriage,18/1/2005,GL_3,2
+NS4701,2005,Community_3,HH_421,950,Throat,Throat,Aymptomatic_carriage,18/1/2005,GL_10,14
+NS4702,2005,Community_3,HH_471,1017,Throat,Throat,Aymptomatic_carriage,18/1/2005,GL_3,2
+NS4706,2005,Community_3,HH_539,1082,Throat,Throat,Aymptomatic_carriage,20/1/2005,GL_9,150
+NS4707,2005,Community_3,HH_406,806,Skin,Skin sore,Impetigo,18/1/2005,GL_57,12
+NS4709,2005,Community_3,HH_539,570,Skin,Thumb,Impetigo,19/1/2005,GL_9,150
+NS4710,2005,Community_1,HH_302,6,Throat,Throat,Aymptomatic_carriage,7/2/2005,GL_27,36
+NS4713,2005,Community_1,HH_237,777,Throat,Throat,Aymptomatic_carriage,8/2/2005,GL_30,196
+NS4716,2005,Community_1,HH_260,26,Throat,Throat,Aymptomatic_carriage,8/2/2005,GL_58,12
+NS4720,2005,Community_1,HH_343,43,Throat,Throat,Aymptomatic_carriage,8/2/2005,GL_13,25
+NS4724,2005,Community_1,HH_479,74,Throat,Throat,Aymptomatic_carriage,8/2/2005,GL_6,6
+NS4740,2005,Community_1,HH_224,203,Throat,Throat,Aymptomatic_carriage,9/2/2005,GL_13,25
+NS4743,2005,Community_1,HH_394,176,Throat,Throat,Aymptomatic_carriage,9/2/2005,GL_52,191
+NS4744,2005,Community_1,HH_394,371,Throat,Throat,Aymptomatic_carriage,9/2/2005,GL_52,191
+NS4745,2005,Community_1,HH_236,796,Skin,Skin sore,Impetigo,8/2/2005,GL_21,40
+NS4746,2005,Community_1,HH_479,665,Skin,Skin sore,Impetigo,8/2/2005,GL_30,196
+NS4747,2005,Community_1,HH_536,789,Skin,Skin sore,Impetigo,8/2/2005,GL_54,268
+NS4748,2005,Community_1,HH_288,781,Skin,Right leg,Impetigo,10/2/2005,GL_14,49
+NS4749,2005,Community_1,HH_536,217,Skin,Skin sore,Impetigo,10/2/2005,GL_54,268
+NS4752,2005,Community_1,HH_479,180,Throat,Throat,Aymptomatic_carriage,10/2/2005,GL_6,6
+NS4755,2005,Community_1,HH_536,217,Throat,Throat,Aymptomatic_carriage,10/2/2005,GL_54,268
+NS4761,2005,Community_3,HH_421,800,Throat,Throat,Aymptomatic_carriage,14/2/2005,GL_51,2
+NS4762,2005,Community_3,HH_421,817,Throat,Throat,Aymptomatic_carriage,14/2/2005,GL_1,47
+NS4763,2005,Community_3,HH_421,820,Throat,Throat,Aymptomatic_carriage,14/2/2005,GL_1,47
+NS4764,2005,Community_3,HH_421,946,Throat,Throat,Aymptomatic_carriage,14/2/2005,GL_51,2
+NS4766,2005,Community_3,HH_421,951,Skin,Skin sore,Impetigo,14/2/2005,GL_56,268
+NS4772,2005,Community_3,HH_421,799,Throat,Throat,Aymptomatic_carriage,14/2/2005,GL_3,2
+NS4773,2005,Community_3,HH_421,1011,Throat,Throat,Aymptomatic_carriage,14/2/2005,GL_3,2
+NS4774,2005,Community_3,HH_471,1103,Throat,Throat,Aymptomatic_carriage,15/2/2005,GL_1,47
+NS4776,2005,Community_3,HH_188,564,Throat,Throat,Aymptomatic_carriage,16/2/2005,GL_1,47
+NS4778,2005,Community_3,HH_402,1121,Throat,Throat,Aymptomatic_carriage,17/2/2005,GL_59,126
+NS4780,2005,Community_3,HH_406,1124,Throat,Throat,Aymptomatic_carriage,17/2/2005,GL_1,47
+NS4782,2005,Community_3,HH_433,425,Throat,Throat,Aymptomatic_carriage,17/2/2005,GL_1,47
+NS4788,2005,Community_3,HH_491,751,Throat,Throat,Aymptomatic_carriage,17/2/2005,singleton_GL_32,19
+NS4790,2005,Community_3,HH_529,761,Throat,Throat,Aymptomatic_carriage,17/2/2005,GL_1,47
+NS4791,2005,Community_3,HH_529,852,Throat,Throat,Aymptomatic_carriage,17/2/2005,GL_1,47
+NS4792,2005,Community_3,HH_416,1139,Throat,Throat,Aymptomatic_carriage,17/2/2005,GL_1,47
+NS4794,2005,Community_3,HH_342,1106,Skin,Right leg,Impetigo,14/2/2005,singleton_GL_43,20
+NS4795,2005,Community_3,HH_539,444,Skin,Left leg,Impetigo,15/2/2005,GL_1,47
+NS4796,2005,Community_3,HH_539,445,Skin,Right leg,Impetigo,15/2/2005,GL_1,47
+NS4797,2005,Community_3,HH_421,893,Skin,Leg,Impetigo,15/2/2005,GL_27,36
+NS4798,2005,Community_3,HH_999,1110,Skin,Arm,Impetigo,15/2/2005,GL_1,47
+NS4800,2005,Community_3,HH_486,1118,Skin,Right knee,Impetigo,16/2/2005,GL_8,77
+NS4801,2005,Community_3,HH_539,528,Skin,Right leg,Impetigo,16/2/2005,GL_1,47
+NS4802,2005,Community_3,HH_539,1141,Skin,Left leg,Impetigo,16/2/2005,GL_9,150
+NS4803,2005,Community_3,HH_406,1054,Skin,Leg,Impetigo,17/2/2005,GL_1,47
+NS4804,2005,Community_3,HH_433,270,Skin,Right leg,Impetigo,17/2/2005,GL_40,266
+NS4805,2005,Community_3,HH_491,645,Skin,Left leg,Impetigo,17/2/2005,GL_1,47
+NS4806,2005,Community_3,HH_529,761,Skin,Right leg,Impetigo,17/2/2005,GL_1,47
+NS4818,2005,Community_1,HH_220,145,Throat,Throat,Aymptomatic_carriage,7/3/2005,GL_54,268
+NS4820,2005,Community_1,HH_224,189,Throat,Throat,Aymptomatic_carriage,8/3/2005,GL_13,25
+NS4825,2005,Community_1,HH_425,154,Throat,Throat,Aymptomatic_carriage,8/3/2005,GL_20,268
+NS4828,2005,Community_1,HH_366,162,Throat,Throat,Aymptomatic_carriage,8/3/2005,GL_1,47
+NS4830,2005,Community_1,HH_236,864,Skin,Left leg,Impetigo,8/3/2005,GL_14,49
+NS4994,2005,Community_1,HH_536,217,Throat,Throat,Aymptomatic_carriage,18/4/2005,GL_1,47
+NS4995,2005,Community_1,HH_425,229,Throat,Throat,Aymptomatic_carriage,18/4/2005,GL_1,47
+NS4998,2005,Community_1,HH_536,598,Throat,Throat,Aymptomatic_carriage,20/4/2005,GL_1,47
+NS4999,2005,Community_1,HH_224,658,Throat,Throat,Aymptomatic_carriage,18/4/2005,GL_14,49
+NS5000,2005,Community_1,HH_536,789,Throat,Throat,Aymptomatic_carriage,18/4/2005,GL_1,47
+NS5002,2005,Community_1,HH_425,1175,Throat,Throat,Aymptomatic_carriage,18/4/2005,GL_1,47
+NS5005,2005,Community_1,HH_224,189,Throat,Throat,Aymptomatic_carriage,19/4/2005,GL_13,25
+NS5012,2005,Community_1,HH_343,395,Throat,Throat,Aymptomatic_carriage,19/4/2005,GL_1,47
+NS5014,2005,Community_1,HH_343,770,Throat,Throat,Aymptomatic_carriage,19/4/2005,GL_1,47
+NS5016,2005,Community_1,HH_260,1183,Throat,Throat,Aymptomatic_carriage,19/4/2005,GL_1,47
+NS5020,2005,Community_1,HH_536,216,Throat,Throat,Aymptomatic_carriage,20/4/2005,GL_1,47
+NS5025,2005,Community_1,HH_343,970,Throat,Throat,Aymptomatic_carriage,20/4/2005,singleton_GL_44,46
+NS5026,2005,Community_1,HH_260,310,Skin,Right leg,Impetigo,19/4/2005,GL_55,268
+NS5027,2005,Community_1,HH_425,684,Skin,Left leg,Impetigo,19/4/2005,GL_21,40
+NS5028,2005,Community_1,HH_260,1183,Skin,Left arm,Impetigo,19/4/2005,GL_1,47
+NS5029,2005,Community_1,HH_394,320,Skin,Infect scabies,Impetigo,20/4/2005,GL_13,25
+NS5030,2005,Community_1,HH_288,768,Skin,Right leg,Impetigo,20/4/2005,GL_1,47
+NS5031,2005,Community_1,HH_479,1158,Skin,Right leg,Impetigo,20/4/2005,GL_1,47
+NS5032,2005,Community_1,HH_479,1158,Skin,Left leg,Impetigo,20/4/2005,GL_1,47
+NS5036,2005,Community_3,HH_471,1193,Throat,Throat,Aymptomatic_carriage,26/4/2005,GL_59,126
+NS5040,2005,Community_3,HH_437,738,Throat,Throat,Aymptomatic_carriage,28/4/2005,GL_10,14
+NS5043,2005,Community_3,HH_486,758,Throat,Throat,Aymptomatic_carriage,29/4/2005,GL_1,47
+NS5044,2005,Community_3,HH_486,1045,Throat,Throat,Aymptomatic_carriage,29/4/2005,GL_1,47
+NS5046,2005,Community_3,HH_529,1201,Throat,Throat,Aymptomatic_carriage,27/4/2005,GL_35,126
+NS5048,2005,Community_3,HH_486,1049,Throat,Throat,Aymptomatic_carriage,28/4/2005,GL_1,47
+NS5049,2005,Community_3,HH_999,925,Skin,Left knee,Impetigo,27/4/2005,GL_1,47
+NS5050,2005,Community_3,HH_999,926,Skin,Right leg,Impetigo,27/4/2005,GL_9,150
+NS5063,2005,Community_1,HH_343,40,Throat,Throat,Aymptomatic_carriage,16/5/2005,GL_1,47
+NS5066,2005,Community_1,HH_343,45,Throat,Throat,Aymptomatic_carriage,16/5/2005,GL_22,54
+NS5068,2005,Community_1,HH_425,48,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_7,6
+NS5071,2005,Community_1,HH_425,57,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_1,47
+NS5072,2005,Community_1,HH_425,69,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_1,47
+NS5073,2005,Community_1,HH_220,148,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_49,49
+NS5082,2005,Community_1,HH_237,340,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_7,6
+NS5085,2005,Community_1,HH_366,600,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_20,268
+NS5087,2005,Community_1,HH_224,657,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_49,49
+NS5089,2005,Community_1,HH_237,691,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_1,47
+NS5092,2005,Community_1,HH_338,871,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_1,47
+NS5094,2005,Community_1,HH_237,999,Throat,Throat,Aymptomatic_carriage,17/5/2005,GL_1,47
+NS5098,2005,Community_1,HH_338,254,Throat,Throat,Aymptomatic_carriage,18/5/2005,GL_6,6
+NS5103,2005,Community_1,HH_338,869,Throat,Throat,Aymptomatic_carriage,18/5/2005,GL_1,47
+NS5108,2005,Community_1,HH_260,1184,Throat,Throat,Aymptomatic_carriage,18/5/2005,GL_55,268
+NS5115,2005,Community_1,HH_536,979,Throat,Throat,Aymptomatic_carriage,18/5/2005,GL_22,54
+NS5116,2005,Community_1,HH_237,1092,Skin,Left leg,Impetigo,17/5/2005,GL_22,54
+NS5117,2005,Community_1,HH_288,8,Skin,Right leg,Impetigo,18/5/2005,GL_21,40
+NS5118,2005,Community_1,HH_536,789,Skin,Left leg,Impetigo,18/5/2005,GL_9,150
+NS5119,2005,Community_3,HH_419,466,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_1,47
+NS5124,2005,Community_3,HH_421,1062,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_35,126
+NS5125,2005,Community_3,HH_188,1112,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_1,47
+NS5126,2005,Community_3,HH_188,1227,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_3,2
+NS5127,2005,Community_3,HH_342,626,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_3,2
+NS5128,2005,Community_3,HH_433,1004,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_48,27
+NS5131,2005,Community_3,HH_412,938,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_37,90
+NS5134,2005,Community_3,HH_421,952,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_36,123
+NS5136,2005,Community_3,HH_437,736,Throat,Throat,Aymptomatic_carriage,24/5/2005,singleton_GL_25,5
+NS5137,2005,Community_3,HH_437,738,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_36,123
+NS5139,2005,Community_3,HH_437,737,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_10,14
+NS5141,2005,Community_3,HH_437,1232,Throat,Throat,Aymptomatic_carriage,24/5/2005,GL_10,14
+NS5143,2005,Community_3,HH_402,417,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_36,123
+NS5144,2005,Community_3,HH_471,1103,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_10,14
+NS5145,2005,Community_3,HH_471,538,Throat,Throat,Aymptomatic_carriage,25/5/2005,singleton_GL_33,19
+NS5146,2005,Community_3,HH_471,1193,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_59,126
+NS5147,2005,Community_3,HH_486,655,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_1,47
+NS5149,2005,Community_3,HH_491,890,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_1,47
+NS5151,2005,Community_3,HH_433,743,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_1,47
+NS5152,2005,Community_3,HH_495,451,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_22,54
+NS5154,2005,Community_3,HH_416,1138,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_3,2
+NS5156,2005,Community_3,HH_416,1205,Throat,Throat,Aymptomatic_carriage,25/5/2005,GL_1,47
+NS5157,2005,Community_3,HH_437,736,Skin,Right knee,Impetigo,24/5/2005,GL_36,123
+NS5159,2005,Community_3,HH_437,1231,Skin,Left leg,Impetigo,24/5/2005,GL_10,14
+NS5160,2005,Community_3,HH_402,417,Skin,Right leg 1,Impetigo,25/5/2005,GL_10,14
+NS5161,2005,Community_3,HH_402,417,Skin,Right leg 2,Impetigo,25/5/2005,GL_10,14
+NS5162,2005,Community_3,HH_402,417,Skin,Left leg,Impetigo,25/5/2005,GL_10,14
+NS5163,2005,Community_3,HH_402,418,Skin,Right leg,Impetigo,25/5/2005,GL_10,14
+NS5257,2005,Community_1,HH_225,396,Throat,Throat,Aymptomatic_carriage,7/6/2005,GL_22,54
+NS5265,2005,Community_1,HH_225,240,Throat,Throat,Aymptomatic_carriage,8/6/2005,GL_22,54
+NS5267,2005,Community_1,HH_403,228,Throat,Throat,Aymptomatic_carriage,8/6/2005,singleton_GL_26,5
+NS5268,2005,Community_1,HH_260,1185,Throat,Throat,Aymptomatic_carriage,8/6/2005,GL_1,47
+NS5269,2005,Community_1,HH_338,389,Skin,Leg,Impetigo,7/6/2005,GL_13,25
+NS5270,2005,Community_1,HH_260,1185,Skin,Leg 1,Impetigo,8/6/2005,GL_1,47
+NS5271,2005,Community_1,HH_260,1185,Skin,Leg 2,Impetigo,8/6/2005,GL_1,47
+NS5274,2005,Community_3,HH_421,799,Throat,Throat,Aymptomatic_carriage,20/6/2005,GL_56,268
+NS5278,2005,Community_3,HH_421,820,Throat,Throat,Aymptomatic_carriage,20/6/2005,GL_1,47
+NS5280,2005,Community_3,HH_433,430,Throat,Throat,Aymptomatic_carriage,21/6/2005,GL_10,14
+NS5281,2005,Community_3,HH_437,736,Throat,Throat,Aymptomatic_carriage,21/6/2005,GL_56,268
+NS5284,2005,Community_3,HH_495,844,Throat,Throat,Aymptomatic_carriage,21/6/2005,GL_8,77
+NS5289,2005,Community_3,HH_342,626,Throat,Throat,Aymptomatic_carriage,21/6/2005,GL_3,2
+NS5290,2005,Community_3,HH_342,1005,Throat,Throat,Aymptomatic_carriage,21/6/2005,GL_37,90
+NS5291,2005,Community_3,HH_342,1100,Throat,Throat,Aymptomatic_carriage,21/6/2005,GL_1,47
+NS5293,2005,Community_3,HH_188,956,Throat,Throat,Aymptomatic_carriage,22/6/2005,GL_56,268
+NS5294,2005,Community_3,HH_999,1238,Skin,Leg,Impetigo,20/6/2005,GL_9,150
+NS5295,2005,Community_3,HH_999,1109,Skin,Right hand,Impetigo,20/6/2005,GL_9,150
+NS5296,2005,Community_3,HH_486,654,Skin,Toe,Impetigo,22/6/2005,GL_37,90

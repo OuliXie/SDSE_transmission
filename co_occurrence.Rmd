@@ -1,0 +1,220 @@
+---
+title: "Household SDSE and S. pyogenes co-occurrence"
+author: "Ouli Xie"
+date: "07/06/2023"
+output: pdf_document
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(ggsci)
+library(svglite)
+```
+
+## Evaluate frequency of co-occurrence of SDSE and S. pyogenes in households
+
+Takes into account all positive swabs, including those which were not sequenced.
+To generate model of independent transmission (both across and within species), 
+clustering of isolates from the same transmission cluster (inferred using whole 
+genome sequencing) within households must be accounted for. Otherwise, 
+permutation of these swabs across all swabs taken at a community visit will 
+cause separation of the linkage
+between these isolates and predict co-occurrences more frequently than would be
+expected.
+
+Transmission cluster data was available for 89% of SDSE isolates and 96% of
+S. pyogenes isolates. Those without sequencing data were assumed to be separate
+transmission clusters.
+
+First read in dataframe with all positive swabs then collapse clustered swabs
+(same transmission cluster, same household, same community visit).
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+all_pos <- read_csv("all_pos_df.csv")
+
+all_pos <- all_pos[is.na(all_pos$gene_and_SNP_cluster) | 
+                     !duplicated(all_pos %>% 
+                                   dplyr::select(House, gene_and_SNP_cluster, 
+                                                 Interval)), ]
+
+# Collapses 90 positives
+```
+
+Assign if each person was positive for SDSE and/or pyo at each visit using the
+above "collapsed" list of positives. This is a binary yes/no designation and
+no longer requires transmission cluster data.
+
+```{r, echo=TRUE, results=FALSE, message=FALSE}
+# Read in all swabs
+all_swabs <- read_csv("co_occur_df.csv")
+
+all_pos <- all_pos %>% 
+  mutate(person_date = paste(QryPerson_2016.Person_id, SpecDate, sep = "_"))
+all_swabs <- all_swabs %>% 
+  mutate(person_date = paste(QryPerson_2016.person_ID, Date, sep = "_"))
+
+all_swabs$Date <- as.Date(all_swabs$Date, "%d-%b-%y")
+all_pos$SpecDate <- as.Date(all_pos$SpecDate, "%d-%b-%y")
+
+# Check if positive for any SDSE
+sdse <- tibble(sdse = rep(0, nrow(all_swabs)), 
+               sdse_throat = rep(0, nrow(all_swabs)), 
+               sdse_skin = rep(0, nrow(all_swabs)))
+for (i in 1:nrow(all_swabs)) {
+  if (sum(c("C", "G") %in% 
+          all_pos$Strep_Group[which(all_pos$person_date == all_swabs$person_date[i] & 
+                                    all_pos$Site == "Throat")]) > 0) {
+    sdse[i, 1] <- 1
+    sdse[i, 2] <- 1
+  }
+  if (sum(c("C", "G") %in% 
+          all_pos$Strep_Group[which(all_pos$person_date == all_swabs$person_date[i] &
+                                    all_pos$Site != "Throat")]) > 0) {
+    sdse[i, 1] <- 1
+    sdse[i, 3] <- 1
+  }
+}
+# Check if positive for any pyo
+pyo <- tibble(pyo = rep(0, nrow(all_swabs)), 
+              pyo_throat = rep(0, nrow(all_swabs)), 
+              pyo_skin = rep(0, nrow(all_swabs)))
+for (i in 1:nrow(all_swabs)) {
+  if ("A" %in% all_pos$Strep_Group[which(all_pos$person_date == all_swabs$person_date[i] &
+                                         all_pos$Site == "Throat")]) {
+    pyo[i, 1] <- 1
+    pyo[i, 2] <- 1
+  }
+  if ("A" %in% all_pos$Strep_Group[which(all_pos$person_date == all_swabs$person_date[i] &
+                                         all_pos$Site != "Throat")]) {
+    pyo[i, 1] <- 1
+    pyo[i, 3] <- 1
+  }
+}
+
+# Add to all_swabs dataframe
+all_swabs <- bind_cols(all_swabs, sdse, pyo)
+```
+
+```{r, include=FALSE}
+# Manually fix some missing values due to date discrepancies (all skin)
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 213 & all_swabs$Date == as.Date("07/12/2004", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 213 & all_swabs$Date == as.Date("07/12/2004", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 1 & all_swabs$Date == as.Date("05/10/2004", "%d/%m/%Y")), 
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 1 & all_swabs$Date == as.Date("05/10/2004", "%d/%m/%Y")), 
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 320 & all_swabs$Date == as.Date("21/04/2004", "%d/%m/%Y")), 
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 320 & all_swabs$Date == as.Date("21/04/2004", "%d/%m/%Y")), 
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 389 & all_swabs$Date == as.Date("06/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 389 & all_swabs$Date == as.Date("06/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 570 & all_swabs$Date == as.Date("18/01/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 570 & all_swabs$Date == as.Date("18/01/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 654 & all_swabs$Date == as.Date("23/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 654 & all_swabs$Date == as.Date("23/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 665 & all_swabs$Date == as.Date("07/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 665 & all_swabs$Date == as.Date("07/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 893 & all_swabs$Date == as.Date("14/02/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 893 & all_swabs$Date == as.Date("14/02/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 1109 & all_swabs$Date == as.Date("21/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo")] <- 1
+all_swabs[which(all_swabs$QryPerson_2016.person_ID == 1109 & all_swabs$Date == as.Date("21/06/2005", "%d/%m/%Y")),
+          which(colnames(all_swabs) == "pyo_skin")] <- 1
+```
+
+Permute SDSE and pyo positive designations across all swabs taken at each
+community visit.
+
+The manuscript performs 10,000 permutations but for speed, this script performs
+1,000.
+
+Can change count(pyo/sdse) to count(pyo_throat/sdse_throat) for sensitivity
+analysis when restricting overlaps to throat level only.
+
+```{r}
+permute_interval = tibble(perm_no = 1:100)
+permute_interval[, as.character(1:35)] <- 
+  rep(0, 100)
+
+# Get total number of co-occurrences at each sampling interval
+# Iterate through intervals
+for (n in 1:100) {
+  for (i in unique(1:35)) {
+    swab_interval <- all_swabs %>% filter(Interval == i)
+    # Permute the positives across the swabs within the interval
+    pyo <- sample(swab_interval$pyo, replace = FALSE)
+    sdse <- sample(swab_interval$sdse, replace = FALSE)
+    # Count co-occurrences - a co-occurrence is counted if SDSE and pyo are
+    # found in a household at the same community visit regardless of if it was
+    # in the same individual or across different individuals in a household
+    swab_interval$pyo <- pyo
+    swab_interval$sdse <- sdse
+    pyo_pos <- swab_interval %>% group_by(House) %>% 
+      count(pyo) %>% filter(pyo == 1) %>% pull(House)
+    sdse_pos <- swab_interval %>% group_by(House) %>% 
+      count(sdse) %>% filter(sdse == 1) %>% pull(House)
+    permute_interval[n, which(
+      colnames(permute_interval) == as.character(i))] <- 
+      length(intersect(pyo_pos, sdse_pos))
+    permute_same_swab[n, 2] <- permute_same_swab[n, 2] + nrow(swab_interval %>% filter(sdse == 1, pyo == 1))
+  }
+}
+```
+
+Number of observed overlapping household-visits
+
+```{r}
+real_interval = tibble()
+real_interval[, as.character(unique(sample_intervals$Interval))] <- 0
+for (i in unique(sample_intervals$Interval)) {
+  swab_interval <- all_swabs %>% filter(Interval == i)
+  pyo_pos <- swab_interval %>% group_by(House) %>% 
+    count(pyo) %>% filter(pyo == 1) %>% pull(House)
+  sdse_pos <- swab_interval %>% group_by(House) %>% 
+    count(sdse) %>% filter(sdse == 1) %>% pull(House)
+  real_interval[1, which(colnames(real_interval) == as.character(i))] <- length(intersect(pyo_pos, sdse_pos))
+}
+
+# Total overlaps in real data
+sum(t(real_interval))
+```
+
+Plot permuted co-occurrences
+
+```{r}
+permute_summary <- permute_interval %>% rowwise() %>% 
+  mutate(total = sum(c_across(`1`:`35`))) %>% dplyr::select(total)
+
+permute_plot_all <- permute_summary %>% ggplot(aes(x = total)) + 
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = sum(t(real_interval)), linetype = "dashed", 
+             colour = "firebrick3", size = 1) + 
+  xlab(label = "Number of co-occurrences") +
+  ylab(label = "Number of permutations") + theme_bw(base_size = 20)
+```
+
+```{r, echo=FALSE}
+permute_plot_all
+```
+
+One-sided p value <= observed number of co-occurrences (hypothesis that there is
+inter-species transmission interference)
+
+```{r}
+nrow(permute_summary %>% filter(total <= 100))/nrow(permute_summary)
+```
+
