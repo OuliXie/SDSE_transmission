@@ -1,6 +1,6 @@
 # SDSE_transmission
 
-Code used to generate transmission networks and models for SDSE/S. pyogenes transmission manuscript.
+Code used to generate transmission networks and models for SDSE/S. pyogenes transmission manuscript (https://doi.org/10.1101/2023.08.17.23294027).
 
 Partial metadata is provided here to allow replication of analysis while protecting participant confidentiality.
 Scripts are provided as R markdown files while can be knitted as provided to generate manuscript results.
