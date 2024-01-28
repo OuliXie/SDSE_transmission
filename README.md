@@ -5,6 +5,20 @@ Code used to generate transmission networks and models for SDSE/S. pyogenes tran
 Partial metadata is provided here to allow replication of analysis while protecting participant confidentiality.
 Scripts are provided as R markdown files while can be knitted as provided to generate manuscript results.
 
+Tested on a M1 Mac system with:
+- R v4.3.1
+- tidyverse v2.0.0
+- igraph v1.5.1
+- gridExtra v2.3
+- ggplot2 v3.4.3
+- plotfunctions v1.4
+- ggraph v2.1.0
+- tidygraph v1.3.0
+- scatterpie v0.2.1
+- lubridate v1.9.3
+
+Example scripts should run in ~2 minutes on a standard laptop.
+
 ## Scripts
 1) **sdse_transmission_networks_comm_1.Rmd** <br>
 Generates transmission networks for SDSE and S. pyogenes for community **1**. Also implements the node permutation model to simulate a model of indepedent transmission.
