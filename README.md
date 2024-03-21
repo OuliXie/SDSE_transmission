@@ -3,7 +3,7 @@
 Code used to generate transmission networks and models for SDSE/S. pyogenes transmission manuscript (https://doi.org/10.1101/2023.08.17.23294027).
 
 Partial metadata is provided here to allow replication of analysis while protecting participant confidentiality.
-Scripts are provided as R markdown files while can be knitted as provided to generate manuscript results.
+Scripts are provided as R markdown files which can be knitted as provided to generate manuscript results.
 
 Tested on a M1 Mac system with:
 - R v4.3.1
